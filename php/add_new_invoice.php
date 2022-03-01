@@ -105,12 +105,24 @@
 
   function getInvoiceNumber() {
     require 'db_connection.php';
-    if($con) {
-      $query = "SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'pharmacy' AND TABLE_NAME = 'invoices';";
+    if($con){
+      $query = "SELECT INVOICE_ID FROM invoices";
       $result = mysqli_query($con, $query);
       $row = mysqli_fetch_array($result);
-      echo $row['AUTO_INCREMENT'];
+      if($row) {
+        if($con) {
+          $query = "SELECT max(INVOICE_ID) as mx_in FROM invoices;";
+          $result = mysqli_query($con, $query);
+          $row = mysqli_fetch_array($result);
+          echo $row['mx_in'] + 1;
+          ;
+        }
+      }
+      else{
+        echo "1";
+      }
     }
+
   }
 
   function showMedicineList($text) {
@@ -193,10 +205,11 @@
     $total_amount = $_GET['total_amount'];
     $total_discount = $_GET['total_discount'];
     $net_total = $_GET['net_total'];
+    $invoice_number = $_GET['inv_no'];
 
     require "db_connection.php";
     if($con) {
-      $query = "INSERT INTO invoices (CUSTOMER_ID, INVOICE_DATE, TOTAL_AMOUNT, TOTAL_DISCOUNT, NET_TOTAL) VALUES($customer_id, '$invoice_date', $total_amount, $total_discount, $net_total)";
+      $query = "INSERT INTO invoices (CUSTOMER_ID, INVOICE_DATE, TOTAL_AMOUNT, TOTAL_DISCOUNT, NET_TOTAL,INVOICE_ID) VALUES($customer_id, '$invoice_date', $total_amount, $total_discount, $net_total,$invoice_number)";
       $result = mysqli_query($con, $query);
       echo ($result) ? "Invoice saved..." : "falied to add invoice...";
     }

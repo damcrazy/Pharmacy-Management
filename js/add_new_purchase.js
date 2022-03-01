@@ -22,6 +22,17 @@ class NewMedicine {
   }
 }
 
+
+function getInvoiceNumber() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if(xhttp.readyState = 4 && xhttp.status == 200)
+      document.getElementById("invoice_number").value = xhttp.responseText;
+  };
+  xhttp.open("GET", "php/add_new_purchase.php?action=current_invoice_number", true);
+  xhttp.send();
+}
+
 function addRow() {
   if(typeof addRow.counter == 'undefined')
     addRow.counter = 1;
@@ -110,8 +121,6 @@ function getAmount(row_number) {
 }
 
 function addPurchase() {
-  alert("Purchase added!");
-  console.log("nooooo");
   var suppliers_name = document.getElementById('suppliers_name');
   var invoice_number = document.getElementById('invoice_number');
   var payment_type = document.getElementById('payment_type');
@@ -213,20 +222,14 @@ function addPurchase() {
         generic_name.focus();
       }
       else {
-        //alert("perfect");
         flag = true;
-        //alert("row perfect...");
-        // go ahead and store row date
         medicineStockRow[i-1] = new MedicineStock(medicine_name.value, batch_id.value, expiry_date.value, quantity.value, mrp.value, rate.value);
         newMedicine[i-1] = new NewMedicine(medicine_name.value, packing.value, generic_name.value, suppliers_name.value);
       }
-      if(!flag)
-        return false;
+
     }
-    //alert(medicineStockRow[1].name);
-    // insert data into table
     for(var i = 0; i < row_count - 1; i++) {
-      console.log("works");
+      console.log("stock addes"); //got printed
       if(isNewMedicine(newMedicine[i].name, newMedicine[i].packing) == "true")
         addNewMedicine(newMedicine[i].name, newMedicine[i].packing, newMedicine[i].generic_name, newMedicine[i].supplier_name);
       addMedicineStock(medicineStockRow[i].name, medicineStockRow[i].batch_id, medicineStockRow[i].expiry_date, medicineStockRow[i].quantity, medicineStockRow[i].mrp, medicineStockRow[i].rate, invoice_number.value);
@@ -247,14 +250,14 @@ function addNewMedicine(name, packing, generic_name, supplier_name) {
   xhttp.send();
 }
 
-function addMedicineStock(name, batch_id, expiry_date, quantity, mrp, rate, invoice_number) {
+function addMedicineStock(name, batch_id, expiry_date, quantity, mrp, rate) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if(xhttp.readyState = 4 && xhttp.status == 200)
       xhttp.responseText;
   };
-  console.log(name);
-  xhttp.open("GET", "php/add_new_purchase.php?action=add_stock&name=" + name + "&batch_id=" + batch_id + "&expiry_date=" + expiry_date + "&quantity=" + quantity + "&mrp=" + mrp + "&rate=" + rate + "&invoice_number=" + invoice_number, false);
+  console.log(addMedicineStock ); //got printed
+  xhttp.open("GET", "php/add_new_purchase.php?action=add_stock&name=" + name + "&batch_id=" + batch_id + "&expiry_date=" + expiry_date + "&quantity=" + quantity + "&mrp=" + mrp + "&rate=" + rate , false);
   xhttp.send();
 }
 

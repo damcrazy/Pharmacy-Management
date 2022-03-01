@@ -297,7 +297,7 @@ function addInvoice() {
       updateStock(medicines[i].name, medicines[i].batch_id, medicines[i].quantity);
       addSale(customers_name.value, customers_contact_number.value, invoice_number.value, medicines[i].name, medicines[i].batch_id, medicines[i].expiry_date, medicines[i].quantity, medicines[i].mrp, medicines[i].discount, medicines[i].total);
     }
-    addNewInvoice(customers_name.value, customers_contact_number.value, invoice_date.value, total_amount.value, total_discount.value, net_total.value);
+    addNewInvoice(customers_name.value, customers_contact_number.value, invoice_date.value, total_amount.value, total_discount.value, net_total.value,invoice_number.value);
     document.getElementById("save_button").style.display = "none";
     document.getElementById("new_invoice_button").style.display = "block";
     document.getElementById("print_button").style.display = "block";
@@ -327,12 +327,13 @@ function addSale(customers_name, customers_contact_number, invoice_number, medic
   xhttp.send();
 }
 
-function addNewInvoice(customers_name, customers_contact_number, invoice_date, total_amount, total_discount, net_total) {
+function addNewInvoice(customers_name, customers_contact_number, invoice_date, total_amount, total_discount, net_total,invoice_number) {
+  console.log(invoice_number);  
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if(xhttp.readyState = 4 && xhttp.status == 200)
       document.getElementById("invoice_acknowledgement").innerHTML =  xhttp.responseText;
   };
-  xhttp.open("GET", "php/add_new_invoice.php?action=add_new_invoice&customers_name=" + customers_name + "&customers_contact_number=" + customers_contact_number + "&invoice_date=" + invoice_date + "&total_amount=" + total_amount + "&total_discount=" + total_discount + "&net_total=" + net_total, true);
+  xhttp.open("GET", "php/add_new_invoice.php?action=add_new_invoice&customers_name=" + customers_name + "&customers_contact_number=" + customers_contact_number + "&invoice_date=" + invoice_date + "&total_amount=" + total_amount + "&total_discount=" + total_discount + "&net_total=" + net_total + "&inv_no=" + invoice_number, true);
   xhttp.send();
 }

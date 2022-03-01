@@ -18,6 +18,9 @@
   if(isset($_GET['action']) && $_GET['action'] == "add_new_purchase")
     addNewPurchase();
 
+  if(isset($_GET['action']) && $_GET['action'] == "current_invoice_number")
+  getInvoiceNumber();
+
   function isSupplier($name) {
     require "db_connection.php";
     if($con) {
@@ -58,17 +61,17 @@
     $rate = $_GET['rate'];
     $invoice_number = $_GET['invoice_number'];
     if($con) {
-      $query = "SELECT * FROM medicines_stock WHERE UPPER(NAME) = '".strtoupper($name)."' AND UPPER(BATCH_ID) = '$batch_id'";
+      $query = "SELECT * FROM medicines_stock WHERE UPPER(NAME) = '".strtoupper($name)."' AND UPPER(BATCH_ID) = '$batch_id' AND EXPIRY_DATE = '$expiry_date'";
       $result = mysqli_query($con, $query);
       $row = mysqli_fetch_array($result);
       if($row) {
+        echo "pls work";
         $new_quantity = $row['QUANTITY'] + $quantity;
         $query = "UPDATE medicines_stock SET QUANTITY = $new_quantity WHERE UPPER(NAME) = '".strtoupper($name)."' AND UPPER(BATCH_ID) = '$batch_id'";
         $result = mysqli_query($con, $query);
-        console_log($result);
       }
       else {
-        $query = "INSERT INTO medicines_stock (NAME, BATCH_ID, EXPIRY_DATE, QUANTITY, MRP, RATE, INVOICE_NUMBER) VALUES('$name', '$batch_id', '$expiry_date', $quantity, $mrp, $rate, $invoice_number)";
+        $query = "INSERT INTO medicines_stock (NAME, BATCH_ID, EXPIRY_DATE, QUANTITY, MRP, RATE) VALUES('$name', '$batch_id', '$expiry_date', $quantity, $mrp, $rate)";
         $result = mysqli_query($con, $query);
       }
     }
@@ -92,6 +95,27 @@
         echo "Failed to save purchase!";
     }
   }
+  function getInvoiceNumber() {
+  require 'db_connection.php';
+  if($con){
+    $query = "SELECT INVOICE_NUMBER FROM purchases";
+    $result = mysqli_query($con, $query);
+    $row = mysqli_fetch_array($result);
+    if($row) {
+      if($con) {
+        $query = "SELECT max(INVOICE_NUMBER) as mx_in FROM purchases;";
+        $result = mysqli_query($con, $query);
+        $row = mysqli_fetch_array($result);
+        echo $row['mx_in'] + 1;
+        ;
+      }
+    }
+    else{
+      echo "1";
+    }
+  }
+
+}
 
   function createMedicineInfoRow() {
       $row_id = $_GET['row_id'];

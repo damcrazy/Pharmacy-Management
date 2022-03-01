@@ -1,3 +1,6 @@
+<?php
+$inv = 0;
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -17,7 +20,7 @@
     <script type="text/javascript" src="js/validateForm.js"></script>
     <script src="js/restrict.js"></script>
   </head>
-  <body>
+  <body onload="getInvoiceNumber();">
     <div id="add_new_supplier_model">
       <div class="modal-dialog">
       	<div class="modal-content">
@@ -60,7 +63,7 @@
 
             <div class="col col-md-2 form-group">
               <label class="font-weight-bold" for="">Invoice Number :</label>
-              <input type="number" class="form-control" placeholder="Invoice Number" id="invoice_number" name="invoice_number" onblur="notNull(this.value, 'invoice_number_error'); checkInvoice(this.value, 'invoice_number_error');">
+              <input type="number" class="form-control" placeholder="Invoice Number" id="invoice_number" name="invoice_number" value='.$inv.' onblur="notNull(this.value, 'invoice_number_error'); checkInvoice(this.value, 'invoice_number_error');" disabled="disabled">
               <code class="text-danger small font-weight-bold float-right" id="invoice_number_error" style="display: none;"></code>
             </div>
 
@@ -81,7 +84,7 @@
             </div>
 
             <div class="col col-md-2 form-group">
-               <label class="font-weight-bold" for="invoice_date">Date :</label>
+              <label class="font-weight-bold" for="invoice_date">Date :</label>
               <input type="date" class="datepicker form-control hasDatepicker" id="invoice_date" name="invoice_date" value='<?php echo date('Y-m-d'); ?>' onblur="checkDate(this.value, 'date_error');">
               <code class="text-danger small font-weight-bold float-right" id="date_error" style="display: none;"></code>
             </div>
@@ -133,7 +136,7 @@
           <div class="row col col-md-12">
             <div class="col col-md-5"></div>
             <div class="col col-md-2 form-group">
-              <button class="btn btn-primary form-control" onclick= "addPurchase(); console.log('awedsaw');">ADD</button>
+              <button class="btn btn-primary form-control" onclick= "addPurchase();getInvoiceNumber(); console.log('NEW PURCHASE from add_pur');">ADD</button>
             </div>
             <div class="col col-md-5"></div>
           </div>

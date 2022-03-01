@@ -25,13 +25,18 @@
     if(mysqli_num_rows($result) == 0)
       echo '<div class="list-group-item list-group-item-action font-italic" style="padding: 5px;" disabled>No suggestions...</div>';
     while($row = mysqli_fetch_array($result))
-      echo '<input type="button" class="list-group-item list-group-item-action" value="'.$row['NAME'].'" style="padding: 5px; outline: none;" onclick="suggestionClick(this.value, \''.$action.'\');">';
+      echo '<input type="button" class="list-group-item list-group-item-action" value="'.$row['NAME'].'" style="padding: 5px; outline: none;" onclick="suggestionClick((this.value), \''.$action.'\');">';
     //echo '<input type="button" class="list-group-item list-group-item-action bg-danger text-center text-light" style="padding: 5px;" value="Close" onclick="clearSuggestions(\''.$action.'\');">';
   }
 
+  function remove_numbers($string) {
+    $num = array(0,1,2,3,4,5,6,7,8,9);
+    return str_replace($num, null, $string);
+}
+
   function getValue($con, $action, $column) {
     $name = $_GET['name'];
-    $query = "SELECT * FROM customers WHERE NAME = '$name'";
+    $query = "SELECT * FROM customers WHERE NAME = '$name' Limit 1";
     $result = mysqli_query($con, $query);
     while($row = mysqli_fetch_array($result))
       echo $row[$column];
