@@ -1,6 +1,5 @@
 <?php
-error_reporting(0);
-
+// error_reporting(0);
 
   if(isset($_GET["action"]) && $_GET["action"] == "delete") {
     require "db_connection.php";
@@ -17,8 +16,8 @@ error_reporting(0);
   if(isset($_GET["action"]) && $_GET["action"] == "search")
     searchInvoice(strtoupper($_GET["text"]), $_GET["tag"]);
 
-  if(isset($_GET["action"]) && $_GET["action"] == "print_invoice")
-    printInvoice($_GET["invoice_number"]);
+  // if(isset($_GET["action"]) && $_GET["action"] == "print_invoice")
+  //   printInvoice($_GET["invoice_number"]);
 
   function showInvoices() {
     require "db_connection.php";
@@ -44,9 +43,6 @@ error_reporting(0);
       <td><?php echo $row['TOTAL_DISCOUNT']; ?></td>
       <td><?php echo $row['NET_TOTAL']; ?></td>
       <td>
-        <button class="btn btn-warning btn-sm" onclick="printInvoice(<?php echo $row['INVOICE_ID']; ?>);">
-          <i class="fa fa-fax"></i>
-        </button>
         <button class="btn btn-danger btn-sm" onclick="deleteInvoice(<?php echo $row['INVOICE_ID']; ?>);">
           <i class="fa fa-trash"></i>
         </button>
@@ -77,7 +73,7 @@ error_reporting(0);
   function printInvoice($invoice_number) {
     require "db_connection.php";
     if($con) {
-      $query = "SELECT * FROM sales INNER JOIN customers ON sales.CUSTOMER_ID = customers.ID WHERE INVOICE_NUMBER = $invoice_number";
+      $query = "SELECT * FROM invoices INNER JOIN customers ON sales.CUSTOMER_ID = customers.ID WHERE INVOICE_ID = $invoice_number";
       $result = mysqli_query($con, $query);
       $row = mysqli_fetch_array($result);
       $customer_name = $row['NAME'];
@@ -86,7 +82,7 @@ error_reporting(0);
       $doctor_name = $row['DOCTOR_NAME'];
       $doctor_address = $row['DOCTOR_ADDRESS'];
 
-      $query = "SELECT * FROM invoices WHERE INVOICE_NUMBER = $invoice_number";
+      $query = "SELECT * FROM invoices WHERE INVOICE_ID = $invoice_number";
       $result = mysqli_query($con, $query);
       $row = mysqli_fetch_array($result);
       $invoice_date = $row['INVOICE_DATE'];
@@ -123,24 +119,24 @@ error_reporting(0);
       </div>
       <div class="col-md-3"></div>
 
-      <?php
+      <!--
 
-      $query = "SELECT * FROM admin_credentials";
-      $result = mysqli_query($con, $query);
-      $row = mysqli_fetch_array($result);
-      $p_name = $row['PHARMACY_NAME'];
-      $p_address = $row['ADDRESS'];
-      $p_email = $row['EMAIL'];
-      $p_contact_number = $row['CONTACT_NUMBER'];
-      ?>
-
+      // $query = "SELECT * FROM admin_credentials";
+      // $result = mysqli_query($con, $query);
+      // $row = mysqli_fetch_array($result);
+      // $p_name = $row['PHARMACY_NAME'];
+      // $p_address = $row['ADDRESS'];
+      // $p_email = $row['EMAIL'];
+      // $p_contact_number = $row['CONTACT_NUMBER'];
+      -->
+<!-- 
       <div class="col-md-4">
         <span class="h4">Shop Details : </span><br><br>
-        <span class="font-weight-bold"><?php echo $p_name; ?></span><br>
-        <span class="font-weight-bold"><?php echo $p_address; ?></span><br>
-        <span class="font-weight-bold"><?php echo $p_email; ?></span><br>
-        <span class="font-weight-bold">Mob. No.: <?php echo $p_contact_number; ?></span>
-      </div>
+        <span class="font-weight-bold"></span><br>
+        <span class="font-weight-bold"></span><br>
+        <span class="font-weight-bold"></span><br>
+        <span class="font-weight-bold">Mob. No.: </span>
+      </div> -->
       <div class="col-md-1"></div>
     </div>
     <div class="row text-center">
@@ -166,7 +162,7 @@ error_reporting(0);
             <?php
               $seq_no = 0;
               $total = 0;
-              $query = "SELECT * FROM sales WHERE INVOICE_NUMBER = $invoice_number";
+              $query = "SELECT * FROM invoices WHERE INVOICE_ID = $invoice_number";
               $result = mysqli_query($con, $query);
               while($row = mysqli_fetch_array($result)) {
                 $seq_no++;

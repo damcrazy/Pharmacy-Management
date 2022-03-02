@@ -58,9 +58,9 @@
               <div id="change_button" class="col col-md-4 form-group float-right">
                 <button class="btn btn-warning form-control font-weight-bold" onclick="changePassword();">Reset Password</button>
               </div>
-              <div id="password_button" class="col col-md-4 form-group float-right">
+              <!-- <div id="password_button" class="col col-md-4 form-group float-right">
                 <a href="my_profile.php" class="btn btn-primary form-control font-weight-bold">Profile</a>
-              </div>
+              </div> -->
             </div>
 
           </div>

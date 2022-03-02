@@ -120,18 +120,18 @@
     }
   }
 
-  if(isset($_GET['action']) && $_GET['action'] == 'change_password')
-    changePassword();
+  // if(isset($_GET['action']) && $_GET['action'] == 'change_password')
+  //   changePassword();
 
-  function changePassword() {
-    require "db_connection.php";
-    if($con) {
-      $password = $_GET["password"];
+  // function changePassword() {
+  //   require "db_connection.php";
+  //   if($con) {
+  //     $password = $_GET["password"];
 
-      $query = "UPDATE admin_credentials SET PASSWORD = '$password'";
-      $result = mysqli_query($con, $query);
-      echo ($result) ? "Password changed..." : "Oops! Somthing wrong happend...";
-    }
-  }
+  //     $query = "UPDATE admin_credentials SET PASSWORD = '$password'";
+  //     $result = mysqli_query($con, $query);
+  //     echo ($result) ? "Password changed..." : "Oops! Somthing wrong happend...";
+  //   }
+  // }
 
  ?>

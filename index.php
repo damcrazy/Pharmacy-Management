@@ -36,11 +36,7 @@
             </div>
           </form><!-- form close -->
         </div> <!-- cord-body class -->
-        <div class="card-footer">
-          <div class="text-center">
-            <a class="text-light" href="#">Forgot password?</a>
-          </div>
-        </div> <!-- cord-footer class -->
+        
       </div> <!-- card class -->
     </div> <!-- container class -->
   </body>

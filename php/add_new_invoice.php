@@ -192,7 +192,7 @@
 
     require "db_connection.php";
     if($con) {
-      $query = "INSERT INTO sales (CUSTOMER_ID, INVOICE_NUMBER, MEDICINE_NAME, BATCH_ID, EXPIRY_DATE, QUANTITY, MRP, DISCOUNT, TOTAL) VALUES($customer_id, $invoice_number, '$medicine_name', '$batch_id', '$expiry_date', $quantity, $mrp, $discount, $total)";
+      $query = "INSERT INTO invoices (CUSTOMER_ID, INVOICE_ID, MEDICINE_NAME, BATCH_ID, EXPIRY_DATE, QUANTITY, MRP, DISCOUNT, TOTAL) VALUES($customer_id, $invoice_number, '$medicine_name', '$batch_id', '$expiry_date', $quantity, $mrp, $discount, $total)";
       $result = mysqli_query($con, $query);
       echo ($result) ? "inserted sale" : "falied to add sale...";
     }
