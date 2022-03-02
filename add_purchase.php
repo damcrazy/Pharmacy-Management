@@ -20,7 +20,7 @@ $inv = 0;
     <script type="text/javascript" src="js/validateForm.js"></script>
     <script src="js/restrict.js"></script>
   </head>
-  <body onload="getInvoiceNumber();">
+  <body>
     <div id="add_new_supplier_model">
       <div class="modal-dialog">
       	<div class="modal-content">
@@ -63,7 +63,7 @@ $inv = 0;
 
             <div class="col col-md-2 form-group">
               <label class="font-weight-bold" for="">Invoice Number :</label>
-              <input type="number" class="form-control" placeholder="Invoice Number" id="invoice_number" name="invoice_number" value='.$inv.' onblur="notNull(this.value, 'invoice_number_error'); checkInvoice(this.value, 'invoice_number_error');" disabled="disabled">
+              <input type="number" class="form-control" placeholder="Invoice Number" id="invoice_number" name="invoice_number" value='.$inv.' onblur="notNull(this.value, 'invoice_number_error'); checkInvoice(this.value, 'invoice_number_error');">
               <code class="text-danger small font-weight-bold float-right" id="invoice_number_error" style="display: none;"></code>
             </div>
 
@@ -136,7 +136,7 @@ $inv = 0;
           <div class="row col col-md-12">
             <div class="col col-md-5"></div>
             <div class="col col-md-2 form-group">
-              <button class="btn btn-primary form-control" onclick= "addPurchase();getInvoiceNumber(); console.log('NEW PURCHASE from add_pur');">ADD</button>
+              <button class="btn btn-primary form-control" onclick= "addPurchase(); console.log('NEW PURCHASE from add_pur');">ADD</button>
             </div>
             <div class="col col-md-5"></div>
           </div>

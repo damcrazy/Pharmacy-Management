@@ -152,7 +152,7 @@
             <div class="col col-md-4 form-group"></div>
             <div class="col col-md-2 form-group float-right">
               <label class="font-weight-bold" for="">Paid Amount :</label>
-              <input type="text" class="form-control" name="total_discount" onkeyup="getChange(this.value);">
+              <input type="text" class="form-control" name="total_discount" onkeyup="getChange(this.value);" required>
             </div>
             <div class="col col-md-2 form-group float-right">
               <label class="font-weight-bold" for="">Change :</label>

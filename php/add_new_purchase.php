@@ -20,7 +20,7 @@
 
   if(isset($_GET['action']) && $_GET['action'] == "current_invoice_number")
   getInvoiceNumber();
-
+  
   function isSupplier($name) {
     require "db_connection.php";
     if($con) {
@@ -86,8 +86,30 @@
     $grand_total = $_GET['grand_total'];
     $payment_status = ($payment_type == "Payment Due") ? "DUE" : "PAID";
 
+
+      if($con){
+        $query = "SELECT VOUCHER_NUMBER FROM purchases";
+        $result = mysqli_query($con, $query);
+        $row = mysqli_fetch_array($result);
+        if($row) {
+          if($con) {
+            $query = "SELECT max(VOUCHER_NUMBER) as mx_in FROM purchases;";
+            $result = mysqli_query($con, $query);
+            $row = mysqli_fetch_array($result);
+            // echo $row['mx_in'] + 1;
+            $vnum  = $row['mx_in'] + 1;
+          }
+        }
+        else{
+          $vnum  = 1;
+        }
+      }
+    
+    
+
+
     if($con) {
-      $query = "INSERT INTO purchases (SUPPLIER_NAME, INVOICE_NUMBER, PURCHASE_DATE, TOTAL_AMOUNT, PAYMENT_STATUS) VALUES('$suppliers_name', $invoice_number, '$invoice_date', $grand_total, '$payment_status')";
+      $query = "INSERT INTO purchases (SUPPLIER_NAME, INVOICE_NUMBER, VOUCHER_NUMBER, PURCHASE_DATE, TOTAL_AMOUNT, PAYMENT_STATUS) VALUES('$suppliers_name', $invoice_number, '$vnum ', '$invoice_date', $grand_total, '$payment_status')";
       $result = mysqli_query($con, $query);
       if($result)
         echo "Purchase saved...";
@@ -95,27 +117,6 @@
         echo "Failed to save purchase!";
     }
   }
-  function getInvoiceNumber() {
-  require 'db_connection.php';
-  if($con){
-    $query = "SELECT INVOICE_NUMBER FROM purchases";
-    $result = mysqli_query($con, $query);
-    $row = mysqli_fetch_array($result);
-    if($row) {
-      if($con) {
-        $query = "SELECT max(INVOICE_NUMBER) as mx_in FROM purchases;";
-        $result = mysqli_query($con, $query);
-        $row = mysqli_fetch_array($result);
-        echo $row['mx_in'] + 1;
-        ;
-      }
-    }
-    else{
-      echo "1";
-    }
-  }
-
-}
 
   function createMedicineInfoRow() {
       $row_id = $_GET['row_id'];
