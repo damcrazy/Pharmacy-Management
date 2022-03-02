@@ -1,4 +1,6 @@
 <?php
+error_reporting(0);
+
 
   if(isset($_GET["action"]) && $_GET["action"] == "delete") {
     require "db_connection.php";
